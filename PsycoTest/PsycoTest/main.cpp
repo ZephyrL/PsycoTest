@@ -22,8 +22,7 @@ int CALLBACK WinMain(
 		cout << "ERROR::empty" << endl; return -1;
 	}
 	char* window = "FaceTest";
-	//namedWindow(window, CV_WINDOW_AUTOSIZE);
-	cvNamedWindow(window, CV_WINDOW_AUTOSIZE);
+	namedWindow(window, CV_WINDOW_AUTOSIZE);
 	Mat background = Mat(600, 900, face[0].type(), Scalar(255, 255, 255));
 
 	Mat outline = Mat(214, 154, face[0].type(), Scalar(104, 168, 192));
@@ -41,14 +40,16 @@ int CALLBACK WinMain(
 		resizedFace.copyTo(background(Rect(200, 330, resizedFace.cols, resizedFace.rows)));
 		resizedFace.copyTo(background(Rect(550, 330, resizedFace.cols, resizedFace.rows)));
 
-		//imshow(window, background);
-		CvArr* temp = (CvArr*)(&IplImage(background));
-		cvShowImage(window, temp);
+		imshow(window, background);
 		int key = 0;
 		while (key == 0) {
 			key = waitKey(0);
 			if (key == '1' || key == '2' || key == '3' || key == '4') break;
 			cout << "ERROR::input not in [1,2,3,4]" << endl;
+			if (key == 'q') {
+				destroyAllWindows();
+				return 0;
+			}
 			key = 0;
 		}
 		cout << (char)key << endl;
